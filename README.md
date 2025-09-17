@@ -217,6 +217,8 @@ Use **perfis** para alternar H2 (dev) e MySQL (prod):
 spring:
   profiles:
     active: dev
+# Define o perfil ativo como "dev" (desenvolvimento). Isso significa que as configurações do perfil "dev" serão usadas por padrão.
+
 ---
 spring:
   config:
@@ -224,20 +226,36 @@ spring:
       on-profile: dev
   datasource:
     url: jdbc:h2:mem:produtosdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    # Configuração do banco de dados H2 em memória para o perfil "dev":
+    # - "mem:produtosdb": Cria um banco de dados em memória chamado "produtosdb".
+    # - "MODE=MySQL": Configura o H2 para simular o comportamento do MySQL.
+    # - "DB_CLOSE_DELAY=-1": Mantém o banco ativo enquanto a aplicação estiver em execução.
+    # - "DB_CLOSE_ON_EXIT=FALSE": Evita que o banco seja fechado automaticamente ao encerrar a aplicação.
     driver-class-name: org.h2.Driver
+    # Define o driver JDBC para o banco de dados H2.
     username: sa
     password:
+    # Credenciais de acesso ao banco de dados H2:
+    # - "sa": Usuário padrão do H2.
+    # - Senha vazia (sem senha).
   jpa:
     hibernate:
       ddl-auto: update
+    # Define o comportamento do Hibernate para gerenciar o esquema do banco de dados:
+    # - "update": Atualiza o esquema do banco de dados automaticamente com base nas entidades.
     show-sql: true
+    # Habilita a exibição das consultas SQL geradas pelo Hibernate no console.
     properties:
       hibernate:
         format_sql: true
+        # Formata as consultas SQL exibidas no console para facilitar a leitura.
   h2:
     console:
       enabled: true
+      # Habilita o console web do H2 para acessar e gerenciar o banco de dados.
       path: /h2
+      # Define o caminho do console do H2. Neste caso, o console estará disponível em "/h2".
+
 ---
 spring:
   config:
@@ -245,16 +263,31 @@ spring:
       on-profile: prod
   datasource:
     url: jdbc:mysql://localhost:3306/produtosdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    # Configuração do banco de dados MySQL para o perfil "prod":
+    # - "localhost:3306": Indica que o banco de dados está rodando localmente na porta 3306.
+    # - "produtosdb": Nome do banco de dados. Será criado automaticamente se não existir.
+    # - "createDatabaseIfNotExist=true": Cria o banco de dados "produtosdb" se ele não existir.
+    # - "useSSL=false": Desativa o uso de SSL para a conexão.
+    # - "allowPublicKeyRetrieval=true": Permite a recuperação da chave pública para autenticação (necessário para conexões sem SSL).
+    # - "serverTimezone=UTC": Define o fuso horário da conexão como UTC.
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # Define o driver JDBC para o banco de dados MySQL.
     username: root
     password: root
+    # Credenciais de acesso ao banco de dados MySQL:
+    # - "root": Usuário padrão do MySQL.
+    # - "root": Senha do banco de dados.
   jpa:
     hibernate:
       ddl-auto: update
+    # Define o comportamento do Hibernate para gerenciar o esquema do banco de dados:
+    # - "update": Atualiza o esquema do banco de dados automaticamente com base nas entidades.
     show-sql: false
+    # Desabilita a exibição das consultas SQL geradas pelo Hibernate no console (recomendado para produção).
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        # Define o dialeto do Hibernate para o MySQL, permitindo que o Hibernate gere consultas SQL otimizadas para este banco de dados.
 ```
 
 ---
