@@ -597,7 +597,7 @@ public class BootstrapData {
 
 ---
 
-**Pronto!** Esse esqueleto já atende a maioria dos cenários em sala e projetos iniciais. Se quiser, adapto pro seu repositório e deixo com seed, script SQL e README caprichado. 💙
+
 
 ---
 
@@ -626,8 +626,8 @@ CRUD completo para gestão de produtos com listagem, busca, paginação, ordena�
 ## 🚀 Comece agora
 ### 1) Clonar o projeto
 ```bash
-git clone <URL_DO_REPO>
-cd <PASTA_DO_REPO>
+git clone https://github.com/karizeviecelli/projetoCadastro.git
+cd cadastro
 ````
 
 ### 2) Rodar em **dev** (H2)
@@ -745,6 +745,3 @@ Uso educacional. Adapte livremente conforme sua necessidade.
 
 ```
 
-> Dica: substitua `<URL_DO_REPO>` no README pelo link do seu GitHub.
-
-```
