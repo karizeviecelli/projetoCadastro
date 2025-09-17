@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/_base :: html(~{::title}, ~{::section})">
+<!-- Declaração do tipo de documento HTML e definição do idioma como português do Brasil -->
+<!-- O atributo "th:replace" substitui o conteúdo pelo fragmento "_base.html", reutilizando o layout base -->
+<head>
+  <title>Produtos</title>
+  <!-- Define o título da página -->
+</head>
+<section>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Cabeçalho da página com título e botão para adicionar novo produto -->
+    <h1 class="h3">Produtos</h1>
+    <a class="btn btn-primary" th:href="@{/produtos/novo}">Novo</a>
+    <!-- Link para a página de criação de um novo produto -->
+  </div>
+
+  <form class="row g-2 mb-3" method="get">
+    <!-- Formulário para busca de produtos -->
+    <div class="col-auto">
+      <input type="text" class="form-control" name="q" th:value="${q}" placeholder="Buscar por nome...">
+      <!-- Campo de entrada para busca, preenchido com o valor atual do parâmetro "q" -->
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+      <!-- Botão para submeter o formulário de busca -->
+    </div>
+  </form>
+
+  <div th:if="${sucesso}" class="alert alert-success" th:text="${sucesso}"></div>
+  <!-- Exibe uma mensagem de sucesso, se existir -->
+  <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+  <!-- Exibe uma mensagem de erro, se existir -->
+
+  <table class="table table-striped align-middle">
+    <!-- Tabela para exibição dos produtos -->
+    <thead>
+      <tr>
+        <th>
+          <a th:href="@{|/produtos?q=${q}&sort=nome&dir=${dir=='asc'?'desc':'asc'}|}">Nome</a>
+          <!-- Link para ordenar os produtos pelo nome -->
+        </th>
+        <th>Preço</th>
+        <th>Estoque</th>
+        <th>Ativo</th>
+        <th style="width: 160px">Ações</th>
+        <!-- Coluna para ações (editar e excluir) -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="p : ${pagina.content}">
+        <!-- Itera sobre os produtos na página atual -->
+        <td th:text="${p.nome}"></td>
+        <!-- Exibe o nome do produto -->
+        <td th:text="${#numbers.formatDecimal(p.preco, 1, 'POINT', 2, 'COMMA')}"></td>
+        <!-- Exibe o preço do produto formatado -->
+        <td th:text="${p.estoque}"></td>
+        <!-- Exibe a quantidade em estoque -->
+        <td>
+          <span th:classappend="${p.ativo} ? 'badge bg-success' : 'badge bg-secondary'" th:text="${p.ativo} ? 'Sim' : 'Não'"></span>
+          <!-- Exibe se o produto está ativo ou não, com cores diferentes -->
+        </td>
+        <td>
+          <a class="btn btn-sm btn-outline-primary" th:href="@{|/produtos/editar/${p.id}|}">Editar</a>
+          <!-- Link para editar o produto -->
+          <form th:action="@{|/produtos/excluir/${p.id}|}" method="post" class="d-inline" onsubmit="return confirm('Confirma a exclusão?');">
+            <!-- Formulário para excluir o produto -->
+            <button class="btn btn-sm btn-outline-danger" type="submit">Excluir</button>
+            <!-- Botão para excluir o produto -->
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav th:if="${pagina.totalPages > 1}">
+    <!-- Navegação entre páginas, exibida apenas se houver mais de uma página -->
+    <ul class="pagination">
+      <li class="page-item" th:classappend="${pagina.first} ? 'disabled'">
+        <!-- Botão "Anterior", desativado se estiver na primeira página -->
+        <a class="page-link" th:href="@{|/produtos?page=${pagina.number-1}&q=${q}|}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, pagina.totalPages-1)}" th:classappend="${i==pagina.number}? 'active'">
+        <!-- Botões para cada página, com o botão da página atual destacado -->
+        <a class="page-link" th:text="${i+1}" th:href="@{|/produtos?page=${i}&q=${q}|}"></a>
+      </li>
+      <li class="page-item" th:classappend="${pagina.last} ? 'disabled'">
+        <!-- Botão "Próxima", desativado se estiver na última página -->
+        <a class="page-link" th:href="@{|/produtos?page=${pagina.number+1}&q=${q}|}">Próxima</a>
+      </li>
+    </ul>
+  </nav>
+</section>
+</html>

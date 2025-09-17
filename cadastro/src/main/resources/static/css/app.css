@@ -1,0 +1,4 @@
+/* Adiciona um espaçamento inferior ao corpo da página para evitar que o conteúdo fique muito próximo do rodapé */
+body { 
+  padding-bottom: 48px; 
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/_base :: html(~{::title}, ~{::section})">
+<!-- Declaração do tipo de documento HTML e definição do idioma como português do Brasil -->
+<!-- O atributo "th:replace" substitui o conteúdo pelo fragmento "_base.html" -->
+<head>
+  <title th:text="${produto.id} != null ? 'Editar Produto' : 'Novo Produto'"></title>
+  <!-- Define o título da página dinamicamente:
+       - "Editar Produto" se o produto já existir (tem ID).
+       - "Novo Produto" se for um novo produto (sem ID). -->
+</head>
+<section>
+  <h1 class="h3 mb-3" th:text="${produto.id} != null ? 'Editar Produto' : 'Novo Produto'">Novo Produto</h1>
+  <!-- Define o cabeçalho da página dinamicamente:
+       - "Editar Produto" se o produto já existir (tem ID).
+       - "Novo Produto" se for um novo produto (sem ID). -->
+
+  <form th:action="@{/produtos}" th:object="${produto}" method="post" class="row g-3">
+    <!-- Formulário para criar ou editar um produto:
+         - "th:action" define a URL para onde o formulário será enviado.
+         - "th:object" associa o formulário ao objeto "produto".
+         - "method=post" define o método HTTP usado para enviar os dados. -->
+
+    <input type="hidden" th:if="${produto.id}" th:field="*{id}">
+    <!-- Campo oculto para o ID do produto:
+         - Só é exibido se o produto já existir (tem ID). -->
+
+    <div class="col-md-6">
+      <label class="form-label" for="nome">Nome</label>
+      <input class="form-control" id="nome" th:field="*{nome}">
+      <!-- Campo de entrada para o nome do produto:
+           - "th:field" associa o campo ao atributo "nome" do objeto "produto". -->
+      <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+      <!-- Exibe mensagens de erro de validação para o campo "nome", se existirem. -->
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="preco">Preço</label>
+      <input type="number" step="0.01" class="form-control" th:field="*{preco}">
+      <!-- Campo de entrada para o preço do produto:
+           - "type=number" define que o campo aceita apenas números.
+           - "step=0.01" permite valores decimais com duas casas. -->
+      <div class="text-danger" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></div>
+      <!-- Exibe mensagens de erro de validação para o campo "preco", se existirem. -->
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="estoque">Estoque</label>
+      <input type="number" class="form-control" th:field="*{estoque}">
+      <!-- Campo de entrada para a quantidade em estoque:
+           - "type=number" define que o campo aceita apenas números inteiros. -->
+      <div class="text-danger" th:if="${#fields.hasErrors('estoque')}" th:errors="*{estoque}"></div>
+      <!-- Exibe mensagens de erro de validação para o campo "estoque", se existirem. -->
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="ativo">Ativo</label>
+      <select class="form-select" th:field="*{ativo}">
+        <!-- Campo de seleção para o status "ativo" do produto:
+             - "th:field" associa o campo ao atributo "ativo" do objeto "produto". -->
+        <option th:value="true">Sim</option>
+        <option th:value="false">Não</option>
+        <!-- Opções para definir se o produto está ativo ou não. -->
+      </select>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="descricao">Descrição</label>
+      <textarea class="form-control" th:field="*{descricao}" rows="3"></textarea>
+      <!-- Campo de texto para a descrição do produto:
+           - "rows=3" define a altura inicial do campo. -->
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-primary" type="submit">Salvar</button>
+      <!-- Botão para enviar o formulário. -->
+      <a class="btn btn-outline-secondary" th:href="@{/produtos}">Cancelar</a>
+      <!-- Link para cancelar e voltar à lista de produtos. -->
+    </div>
+  </form>
+</section>
+</html>
