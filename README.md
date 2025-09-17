@@ -64,48 +64,147 @@ src
 Inclua (ou confira) as dependências:
 
 ```xml
-<dependencies>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-thymeleaf</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-validation</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <scope>runtime</scope>
-  </dependency>
-  <dependency>
-    <groupId>com.mysql</groupId>
-    <artifactId>mysql-connector-j</artifactId>
-    <scope>runtime</scope>
-  </dependency>
-  <dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <optional>true</optional>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-devtools</artifactId>
-    <optional>true</optional>
-  </dependency>
-  <dependency>
-    <groupId>org.webjars</groupId>
-    <artifactId>webjars-locator-core</artifactId>
-  </dependency>
-</dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Define o modelo do projeto Maven -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Configuração do projeto pai -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <!-- Define o grupo do projeto pai como Spring Boot -->
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!-- Define o artefato pai como o Spring Boot Starter Parent -->
+        <version>3.1.4</version>
+        <!-- Define a versão do Spring Boot -->
+        <relativePath />
+        <!-- Permite que o Maven encontre o projeto pai automaticamente -->
+    </parent>
+
+    <!-- Informações do projeto -->
+    <groupId>com.cadastro_produtos</groupId>
+    <!-- Define o grupo do projeto -->
+    <artifactId>cadastro</artifactId>
+    <!-- Define o nome do artefato -->
+    <version>0.0.1-SNAPSHOT</version>
+    <!-- Define a versão do projeto -->
+    <name>cadastro</name>
+    <!-- Nome do projeto -->
+    <description>Demo project for Spring Boot</description>
+    <!-- Descrição do projeto -->
+
+    <!-- Propriedades do projeto -->
+    <properties>
+        <java.version>17</java.version>
+        <!-- Define a versão do Java como 17 -->
+        <lombok.version>1.18.32</lombok.version>
+        <!-- Define a versão do Lombok -->
+    </properties>
+
+    <!-- Dependências do projeto -->
+    <dependencies>
+        <!-- Dependência para JPA (Java Persistence API) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Dependência para Thymeleaf (mecanismo de template) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- Dependência para validação de dados -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Dependência para criar APIs REST -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Dependência para ferramentas de desenvolvimento -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <!-- Define o escopo como runtime, para que não seja incluído no build final -->
+        </dependency>
+
+        <!-- Dependência para o banco de dados H2 (em memória) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+            <!-- Define o escopo como runtime -->
+        </dependency>
+
+        <!-- Dependência para o conector MySQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+            <!-- Define o escopo como runtime -->
+        </dependency>
+
+        <!-- Dependência para o Lombok (reduz boilerplate no código) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Dependência para testes -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <!-- Define o escopo como test -->
+        </dependency>
+
+        <!-- Dependência para localizar recursos WebJars -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+        </dependency>
+
+        <!-- Dependência para o Bootstrap via WebJars -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>5.3.3</version>
+        </dependency>
+
+        <!-- Dependência para o jQuery via WebJars -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Configuração do build -->
+    <build>
+        <plugins>
+            <!-- Plugin para compilar o código Java -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <!-- Plugin para empacotar a aplicação Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
 ```
 
 ---
