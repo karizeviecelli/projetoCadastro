@@ -601,7 +601,7 @@ public class BootstrapData {
 
 ---
 
-## 19) **README.md** — pronto para colar no seu repositório 👇
+##  **README.md** 👇
 
 ````markdown
 # Cadastro de Produtos — Spring Boot + Thymeleaf + Bootstrap + SQL
